@@ -1,3 +1,5 @@
+import functools
+
 # lambda <argument(s)> : <expression>
 # lambdas are one-liner functions
 # lambda is an IIFE-Immediately Invoked Function Expression
@@ -6,8 +8,6 @@
 # Higher Order Function->map, filter & reduce
 # lambda can be used with the key parameter, e.g sorted(list, key=lambda)
 # A lambda function inside a lambda function is called a nested lambda function
-
-import functools
 
 # find min of 3 variables
 my_min = (lambda a, b, c: a if (a <= b) and (a <= c) else (b if (b <= c) else c))(4, 12, 3)
