@@ -150,6 +150,48 @@ for c in Counter(3, 7):
     print(c)
 
 
+#### 5 usage scenarios of asterisks ####
+# scenario 1, multiplication
+print(f"2*3: {2*3}")
+print(f"2**3: {2**3}")
+
+# scenario 2, Receive an Unlimited Number of Arguments
+def print_multiple_args(*args, **kwargs):
+    print("print_multiple_args: hello world")
+print_multiple_args()
+
+# scenario 3, Restrict to Keyword-Only Arguments
+def keyword_args_only(*, first, second):
+    print(f"keyword_args_only: first: {first} and second: {second}")
+keyword_args_only(first='hello', second='world')
+
+# scenario 4,  Iterables Unpacking
+A = [1, 2, 3]
+B = ("a", "b", "c")
+C = {7.1, 8.2, 9.3}
+L = [a for a in A] + [b for b in B] + [c for c in C]
+print(f"L = {L}")
+L = [*A, *B, *C]
+print(f"L = {L}")
+D = {'first': 1, 'second': 2, 'third': 3}
+print(*D)
+# first second third
+# print(**D)
+# TypeError: 'first' is an invalid keyword argument for print()
+# because we must use their keys to receive the unpacked values.
+print('{first},{second},{third}'.format(**D))
+
+# scenario 5 Extended Iterable Unpacking
+# This unpacking syntax was introduced by PEP 3132 to make our code more elegant.
+# This PEP proposes a change to iterable unpacking syntax, allowing to specify a “catch-all” name which will be
+# assigned a list of all items not assigned to a “regular” name.
+L = [1, 2, 3, 4, 5, 6, 7, 8]
+a, *b = L
+print(f"a = {a}")
+print(f"b = {b}")
+
+
+
 if __name__ == '__main__':
     print("hello-general")
     # *args
