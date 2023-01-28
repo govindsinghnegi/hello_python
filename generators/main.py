@@ -1,5 +1,5 @@
 
-# generator is a function that behaves like an iterator by returning an iterator object which we can then iterate over.
+# generator is a function that behaves like an iterator by returning a (lazy) iterator object which we can then iterate over.
 # the code in generator functions only execute when next() is called on the generator object.
 # Local variables and their states are remembered between successive calls.
 # Methods like __iter__() and __next__() are implemented automatically in generator.
@@ -12,11 +12,13 @@
 # As lambda functions create anonymous functions, generator expressions create anonymous generator functions.
 # a list comprehension produces the entire list while the generator expression produces one item at a time.Thus,
 #  a generator expression is much more memory efficient than an equivalent list comprehension.
+# Generators are slower than Iterators, so trade-off between memory vs. speed
 # Generators are excellent mediums to represent an infinite stream of data.
+# advanced generator methods: .send(), .throw(), .close()
 
 
 #### get only odds via custom iterator
-class OddNumberIterator:
+class OddNumbers:
     def __init__(self, max):
         self.start = -1
         self.max = max
@@ -30,25 +32,47 @@ class OddNumberIterator:
             return self.start
 
 print("odd numbers via custom iterator")
-for count in OddNumberIterator(5):
+for count in OddNumbers(5):
     print(count)
 
 #### get odd via generators
 
-def odd_number_generator(max):
+def odd_numbers(max):
     start = 1
     while start <= max:
         yield start
         start += 2
 
 print("odd numbers via simple generator")
-for count in odd_number_generator(5):
+for count in odd_numbers(5):
     print(count)
 
+#### infite sequence generator
+def infite_sequence():
+    start = 0
+    while True:
+        yield start
+        start += 1
 
+#### reading large files
+def csv_reader():
+    file = open("some_file.csv")    # open() creates a generator
+    result = file.read().split("\n")   # but read().split() loads everything into memory
+    return result
 
+def csv_reader_new():
+    file = open("some_file.csv")
+    for row in file:
+        yield row
 
+def csv_reader_using_expr():
+    csv_gen = (row for row in open("some_file.csv"))
+    return csv_gen
 
+print("list comprehension")
+print([num**2 for num in range(5)])
+print("generator comprehension")
+print((num**2 for num in range(5)))
 
 
 if __name__ == "__main__":
